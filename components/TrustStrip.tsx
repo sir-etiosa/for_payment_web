@@ -53,9 +53,9 @@ export function TrustStrip() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
           {FEATURES.map(({ icon, title, body }) => (
             <div key={title} className="flex flex-col items-start gap-3">
-              <div className="text-token">{icon}</div>
+              <div className="text-gold">{icon}</div>
               <div>
-                <p className="font-display text-sm font-semibold text-ink">{title}</p>
+                <p className="font-display text-sm font-bold text-navy">{title}</p>
                 <p className="mt-1 text-xs leading-relaxed text-slate">{body}</p>
               </div>
             </div>

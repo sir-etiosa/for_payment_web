@@ -38,9 +38,9 @@ export function PaymentUseCases() {
         {PAYMENT_USE_CASES.map((uc) => (
           <div
             key={uc.key}
-            className="group rounded-2xl border border-line bg-white p-6 shadow-card transition hover:border-token/40 hover:shadow-lift"
+            className="group rounded-2xl border border-line bg-white p-6 shadow-card transition hover:border-gold/40 hover:shadow-lift"
           >
-            <div className="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-token-soft text-token transition group-hover:bg-token group-hover:text-white">
+            <div className="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gold-soft text-gold transition group-hover:bg-gold group-hover:text-navy">
               {ICONS[uc.key]}
             </div>
             <h3 className="font-display text-base font-semibold text-ink">{uc.title}</h3>

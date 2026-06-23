@@ -4,112 +4,86 @@ import { SettlementVisual } from "@/components/SettlementVisual";
 
 export function Hero() {
   return (
-    <div className="relative overflow-hidden bg-void">
-      {/* Subtle green radial glow behind headline */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-0 h-[700px] w-[700px] opacity-[0.08]"
-        style={{
-          background: "radial-gradient(ellipse at top left, #22C55E 0%, transparent 65%)",
-        }}
-      />
+    <div
+      className="relative overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #FFFBF0 0%, #F9FAFB 50%, #EEF2FF 100%)",
+      }}
+    >
+      {/* Decorative circles (like old site) */}
+      <div className="pointer-events-none absolute top-16 right-16 h-24 w-24 rounded-full bg-gold/10" />
+      <div className="pointer-events-none absolute bottom-24 left-8 h-16 w-16 rounded-full bg-navy/5" />
+      <div className="pointer-events-none absolute top-1/2 right-1/4 h-10 w-10 rounded-full bg-gold/15" />
 
-      {/* Ledger grid overlay */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 ledger-grid" />
+      <Section className="relative pt-16 pb-20 md:pt-24 md:pb-28">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
 
-      <Section className="relative pt-20 pb-28 md:pt-28 md:pb-36">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
-
-          {/* ── Left: copy ── */}
+          {/* Left — copy */}
           <div className="animate-fade-up">
             <p className="eyebrow">Detroit-Built · Global Payments</p>
 
-            <h1 className="mt-5 font-display text-[3rem] font-bold leading-[1.0] tracking-tight text-white sm:text-[3.8rem] lg:text-[4.5rem]">
+            <h1 className="mt-4 font-display text-[2.8rem] font-black leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl">
               Payment
               <br />
               infrastructure
               <br />
               built for real
               <br />
-              <span className="text-settle">commerce.</span>
+              <span className="relative inline-block">
+                commerce.
+                <span className="absolute -bottom-1 left-0 h-1 w-full rounded-full bg-gold/60" />
+              </span>
             </h1>
 
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/50">
-              First Round Payments is a non-custodial, multi-chain network that
-              helps businesses accept, send, and settle payments with lower fees
-              and instant settlement.
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-slate">
+              First Round Payments is a non-custodial payment network that helps
+              businesses accept, send, and settle payments with lower fees and
+              instant settlement — no crypto knowledge required.
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/merchants#apply" size="lg">
-                Get the Wallet →
+                Get started →
               </ButtonLink>
-              <ButtonLink
-                href="/merchants"
-                variant="ghost"
-                size="lg"
-                className="border-white/25 text-white"
-              >
+              <ButtonLink href="/merchants" variant="ghost" size="lg">
                 For Merchants
               </ButtonLink>
             </div>
 
-            {/* Trust badge */}
-            <div className="mt-8 flex items-center gap-2.5">
-              <svg
-                className="h-4 w-4 shrink-0 text-settle"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
-                />
+            {/* Trust line */}
+            <div className="mt-7 flex items-center gap-2.5">
+              <svg className="h-4 w-4 shrink-0 text-settle" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
               </svg>
-              <span className="font-mono text-xs text-white/40">
-                Non-Custodial. Secure. Private.
-              </span>
-              <span className="font-mono text-xs text-white/25">
-                You own your keys.
+              <span className="text-sm text-slate">
+                Non-Custodial · Secure · Compliant · You own your funds.
               </span>
             </div>
           </div>
 
-          {/* ── Right: live settlement widget ── */}
-          <div className="animate-fade-up [animation-delay:160ms]">
-            {/* Widget gets a stronger shadow on dark bg */}
-            <div className="shadow-lift rounded-2xl">
-              <SettlementVisual />
-            </div>
+          {/* Right — settlement widget */}
+          <div className="animate-fade-up [animation-delay:150ms]">
+            <SettlementVisual />
 
-            {/* Detroit origin stamp */}
-            <div className="mt-5 flex items-end justify-between px-1">
-              <div>
-                <p className="font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-white/20">
-                  Detroit Built.
-                </p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/15">
-                  Payments for the people.
-                </p>
+            {/* Floating stat card */}
+            <div className="mt-4 flex items-center gap-3 rounded-2xl bg-white border border-line px-4 py-3 shadow-md">
+              <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gold-soft">
+                <svg className="h-4 w-4 text-gold-dark" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                </svg>
               </div>
-              <p className="font-mono text-[10px] tabular-nums text-white/15">
-                42.3314°N 83.0458°W
-              </p>
+              <div>
+                <p className="text-sm font-semibold text-ink">Up to 70% lower fees</p>
+                <p className="text-xs text-slate">vs. traditional card processing</p>
+              </div>
             </div>
           </div>
 
         </div>
       </Section>
 
-      {/* Fade into next (light) section */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 left-0 right-0 h-20"
-        style={{ background: "linear-gradient(to bottom, transparent, #F4F5F7)" }}
-      />
+      {/* Bottom border */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-line" />
     </div>
   );
 }

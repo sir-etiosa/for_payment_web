@@ -8,24 +8,29 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand backgrounds — darkest to lightest
-        void: "#06080D",       // hero / near-black
-        ink: "#0A0D14",        // dark section backgrounds
-        navy: "#111827",       // dark card surfaces
-        slate: "#6B7899",      // muted text on dark
-        paper: "#F4F5F7",      // light section background
-        line: "#E0E4ED",       // light hairline borders
-        "line-dark": "#1A2030", // dark hairline borders
-        // Settlement accent — "cleared / money in" (vivid green)
-        settle: "#22C55E",
+        // Core brand
+        navy: "#222A44",        // primary dark — nav, footer, dark sections, primary buttons
+        "navy-deep": "#141B2D", // deeper navy for overlays
+        ink: "#111827",         // body text (dark)
+        slate: "#6B7280",       // muted body text
+        paper: "#F9FAFB",       // page background
+        cream: "#FFFBF0",       // warm hero tint
+        line: "#E5E7EB",        // borders
+        // Accents
+        gold: "#D4AF37",        // warm classic gold — THE primary accent
+        "gold-soft": "#FEF9E7", // light gold tint for card icons
+        "gold-dark": "#B8941C", // hover/pressed gold
+        settle: "#16A34A",      // muted green — success/settled states ONLY
         "settle-soft": "#DCFCE7",
-        // $FOR token — dark warm gold
-        token: "#C9A84C",
-        "token-soft": "#FEF3C7",
+        // Legacy aliases (keep so existing classes don't break)
+        token: "#D4AF37",
+        "token-soft": "#FEF9E7",
+        void: "#141B2D",
+        ink2: "#0A0D14",
       },
       fontFamily: {
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Lato", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "Inter", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: {
@@ -35,7 +40,7 @@ const config: Config = {
       boxShadow: {
         card: "0 1px 2px rgba(6,8,13,0.06), 0 8px 30px rgba(6,8,13,0.10)",
         lift: "0 24px 80px rgba(6,8,13,0.50)",
-        "glow-green": "0 0 40px rgba(34,197,94,0.15)",
+        glow: "0 0 40px rgba(212,175,55,0.15)",
       },
       keyframes: {
         "rail-flow": {

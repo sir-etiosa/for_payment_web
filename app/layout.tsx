@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Lato, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const display = Space_Grotesk({
+const display = Lato({
   subsets: ["latin"],
+  weight: ["400", "700", "900"],
   variable: "--font-display",
 });
-const sans = IBM_Plex_Sans({
+const sans = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   variable: "--font-sans",
 });
 const mono = IBM_Plex_Mono({

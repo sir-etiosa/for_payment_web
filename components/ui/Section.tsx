@@ -18,8 +18,8 @@ export function Section({
 
 export function Eyebrow({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <p className={cn("inline-flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.18em] text-settle", className)}>
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-settle" />
+    <p className={cn("inline-flex items-center gap-2 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-gold", className)}>
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
       {children}
     </p>
   );

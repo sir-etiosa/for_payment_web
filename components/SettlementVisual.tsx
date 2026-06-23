@@ -58,7 +58,7 @@ export function SettlementVisual() {
       {/* terminal header */}
       <div className="flex items-center justify-between border-b border-line pb-4">
         <div className="flex items-center gap-2">
-          <span className="inline-block h-2 w-2 animate-pulse-dot rounded-full bg-settle" />
+          <span className="inline-block h-2 w-2 animate-pulse-dot rounded-full bg-gold" />
           <span className="font-mono text-xs uppercase tracking-[0.16em] text-slate">
             Live settlement
           </span>
@@ -79,7 +79,7 @@ export function SettlementVisual() {
       {/* the rail */}
       <div className="relative my-2 h-px w-full bg-line">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/2 h-px w-12 -translate-y-1/2 animate-rail-flow bg-gradient-to-r from-transparent via-settle to-transparent" />
+          <div className="absolute top-1/2 h-px w-12 -translate-y-1/2 animate-rail-flow bg-gradient-to-r from-transparent via-gold to-transparent" />
         </div>
       </div>
 

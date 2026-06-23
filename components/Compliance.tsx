@@ -30,8 +30,8 @@ export function Compliance() {
         <div className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
           {COMPLIANCE.map((c) => (
             <div key={c.title} className="bg-paper p-7">
-              <div className="mb-4 grid h-9 w-9 place-items-center rounded-lg bg-settle-soft">
-                <span className="h-2 w-2 rounded-sm bg-settle" />
+              <div className="mb-4 grid h-9 w-9 place-items-center rounded-lg bg-gold-soft">
+                <span className="h-2 w-2 rounded-sm bg-gold" />
               </div>
               <h3 className="font-display text-base font-semibold tracking-tight text-ink">
                 {c.title}

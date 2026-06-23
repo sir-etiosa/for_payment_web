@@ -33,7 +33,7 @@ export function FeeSavings() {
   }, [volume]);
 
   return (
-    <div className="bg-void py-20 text-white md:py-28">
+    <div className="bg-navy-deep py-20 text-white md:py-28">
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div>
@@ -66,7 +66,7 @@ export function FeeSavings() {
                 step={5000}
                 value={volume}
                 onChange={(e) => setVolume(Number(e.target.value))}
-                className="mt-4 w-full accent-settle"
+                className="mt-4 w-full accent-gold"
               />
               <div className="mt-4 flex flex-wrap gap-2">
                 {PRESETS.map((p) => (
@@ -75,7 +75,7 @@ export function FeeSavings() {
                     onClick={() => setVolume(p)}
                     className={`rounded-full border px-3 py-1.5 font-mono text-xs transition ${
                       volume === p
-                        ? "border-settle bg-settle/15 text-settle"
+                        ? "border-gold bg-gold/15 text-gold"
                         : "border-white/15 text-white/60 hover:border-white/40"
                     }`}
                   >
@@ -90,8 +90,8 @@ export function FeeSavings() {
             <Row label="Typical card fees / month" value={money(cardCost)} muted />
             <Row label="FirstRound fees / month" value={money(frCost)} accent />
             <div className="my-5 h-px bg-white/10" />
-            <div className="rounded-xl bg-settle/10 p-5">
-              <p className="font-mono text-xs uppercase tracking-[0.14em] text-settle">
+            <div className="rounded-xl bg-gold/10 p-5">
+              <p className="font-mono text-xs uppercase tracking-[0.14em] text-gold">
                 You&apos;d save · {pct}% lower
               </p>
               <p className="mt-2 font-mono text-4xl font-medium tabular-nums text-white">
@@ -129,7 +129,7 @@ function Row({
       <span className="text-sm text-white/60">{label}</span>
       <span
         className={`font-mono text-lg tabular-nums ${
-          accent ? "text-settle" : muted ? "text-white/80" : "text-white"
+          accent ? "text-gold" : muted ? "text-white/80" : "text-white"
         }`}
       >
         {value}
