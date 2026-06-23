@@ -1,0 +1,23 @@
+# Next.js
+.next/
+out/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# Misc
+.DS_Store
+*.pem
+mnt/
+.claude/
+
+# Reference images
+/prompt
