@@ -34,7 +34,7 @@ export function MerchantCTA() {
               </ButtonLink>
             </div>
             <p className="mt-6 text-xs text-white/30">
-              Non-custodial · KYB verified · ISO 20022 aligned
+              Non-custodial · KYC verified · ISO 20022 aligned
             </p>
           </div>
         </div>

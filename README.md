@@ -56,7 +56,7 @@ money/settlement data). Loaded via `next/font/google` in `app/layout.tsx`.
 - **Audience** — merchants and finance teams, throughout.
 - **Hero** — payments, settlement, and business adoption.
 - **Security** — new compliance section: non-custodial architecture, merchant
-  verification (KYB), privacy by design, ISO 20022 alignment.
+  verification (KYC), privacy by design, ISO 20022 alignment.
 - **Events** — replaced with payment use cases, settlement flow, and a
   dedicated merchants page.
 

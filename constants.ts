@@ -74,7 +74,7 @@ export const COMPLIANCE = [
     body: "Merchants hold their own keys. FirstRound never takes custody of merchant funds — settlement happens directly to you.",
   },
   {
-    title: "Merchant verification (KYB)",
+    title: "Merchant verification (KYC)",
     body: "Every business is verified through KYC/AML and business onboarding checks before going live on the network.",
   },
   {
@@ -119,7 +119,7 @@ export const MERCHANT_ONBOARDING = [
   {
     n: "02",
     title: "Get verified",
-    body: "We run business verification (KYB) and AML checks, typically cleared within a couple of business days.",
+    body: "We run business verification (KYC) and AML checks, typically cleared within a couple of business days.",
   },
   {
     n: "03",

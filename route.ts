@@ -50,7 +50,7 @@ export async function POST(req: Request) {
 
   // TODO: persist + notify. Wire this to your stack:
   //   - Save to a database (e.g. Postgres / Supabase / Airtable)
-  //   - Send to CRM (HubSpot / Salesforce) to start the KYB pipeline
+  //   - Send to CRM (HubSpot / Salesforce) to start the KYC pipeline
   //   - Notify the merchant team (email / Slack)
   //   - Optionally forward to your existing JotForm intake
   console.log("[merchant-onboarding] new application", application);

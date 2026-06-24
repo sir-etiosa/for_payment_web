@@ -71,7 +71,7 @@ export function OnboardingForm() {
           <ul className="mt-8 space-y-3">
             {[
               "No technical setup to apply",
-              "KYB / AML handled during onboarding",
+              "KYC / AML handled during onboarding",
               "A specialist will reach out with next steps",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3 text-slate">
