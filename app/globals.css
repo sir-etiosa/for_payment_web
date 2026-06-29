@@ -3,16 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    font-size: 106.25%; /* ~17 px from 16 px base — scales every rem value up softly */
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-paper text-ink font-sans antialiased;
-  }
-  html {
-    scroll-behavior: smooth;
+    font-weight: 420; /* subtle boldness lift — Inter variable font supports this */
   }
 }
 
 @layer components {
   .eyebrow {
-    @apply font-sans text-xs font-semibold uppercase tracking-[0.14em] text-gold;
+    @apply font-sans text-xs font-bold uppercase tracking-[0.14em] text-gold;
   }
 }

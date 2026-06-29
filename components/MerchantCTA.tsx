@@ -7,14 +7,15 @@ export function MerchantCTA() {
       <Section>
         <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-8 py-14 md:px-14 md:py-16">
           <div className="text-center">
-            <p className="eyebrow justify-center text-gold">Ready to go live</p>
+            <p className="eyebrow justify-center text-gold">Ready to get started</p>
             <h2 className="mt-4 font-display text-3xl font-black tracking-tight text-white sm:text-4xl md:text-5xl">
-              Accept payments that settle{" "}
-              <span className="text-gold">in seconds.</span>
+              Your business deserves{" "}
+              <span className="text-gold">better payments.</span>
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-lg text-white/60">
-              Apply to become a verified merchant. No commitment required, no
-              upfront costs — most verifications clear within two business days.
+              Join merchants already cutting fees and getting paid in seconds.
+              No commitment, no upfront costs — most verifications clear within
+              two business days.
             </p>
             <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <ButtonLink
@@ -22,7 +23,7 @@ export function MerchantCTA() {
                 size="lg"
                 className="bg-gold text-navy hover:bg-gold-dark hover:text-navy"
               >
-                Start merchant onboarding
+                Apply as a merchant
               </ButtonLink>
               <ButtonLink
                 href="/#contact"
@@ -34,7 +35,7 @@ export function MerchantCTA() {
               </ButtonLink>
             </div>
             <p className="mt-6 text-xs text-white/30">
-              Non-custodial · KYC verified · ISO 20022 aligned
+              Non-custodial · KYC verified · ISO 20022 aligned · Powered by $FOR
             </p>
           </div>
         </div>

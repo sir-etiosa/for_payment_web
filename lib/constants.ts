@@ -3,7 +3,7 @@
 
 export const SITE = {
   name: "FirstRound",
-  tagline: "The non-custodial payment network for merchants.",
+  tagline: "The merchant payment network. Lower fees, instant settlement, zero chargebacks.",
   email: "support@firstroundcoin.com",
   phone: "+1 616 259 5438",
   location: "Detroit, Michigan",

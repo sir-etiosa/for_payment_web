@@ -19,6 +19,7 @@ export function Navbar() {
     { label: "How it works", href: "/#how-it-works" },
     { label: "Security", href: "/#security" },
     { label: "Contact", href: "/#contact" },
+    { label: "$FOR Coin ↗", href: "https://www.firstroundcoin.com", external: true },
   ];
 
   return (
@@ -42,16 +43,28 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-7 lg:flex">
-          {links.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              className="group relative py-1 font-sans text-sm font-semibold text-ink transition hover:text-navy"
-            >
-              {label}
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gold transition-all duration-300 group-hover:w-full rounded-full" />
-            </Link>
-          ))}
+          {links.map(({ label, href, external }) =>
+            external ? (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-1 font-sans text-sm font-semibold text-token transition hover:text-navy"
+              >
+                {label}
+              </a>
+            ) : (
+              <Link
+                key={label}
+                href={href}
+                className="group relative py-1 font-sans text-sm font-semibold text-ink transition hover:text-navy"
+              >
+                {label}
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gold transition-all duration-300 group-hover:w-full rounded-full" />
+              </Link>
+            )
+          )}
         </nav>
 
         {/* CTA */}
@@ -82,16 +95,29 @@ export function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="border-t border-line bg-white px-4 pb-4 lg:hidden">
-          {links.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              onClick={() => setMenuOpen(false)}
-              className="block py-3 font-sans font-semibold text-ink hover:text-navy"
-            >
-              {label}
-            </Link>
-          ))}
+          {links.map(({ label, href, external }) =>
+            external ? (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="block py-3 font-sans font-semibold text-token hover:text-navy"
+              >
+                {label}
+              </a>
+            ) : (
+              <Link
+                key={label}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="block py-3 font-sans font-semibold text-ink hover:text-navy"
+              >
+                {label}
+              </Link>
+            )
+          )}
           <Link
             href="/merchants#apply"
             className="mt-3 block rounded-xl bg-navy py-3 text-center font-sans font-bold text-white"

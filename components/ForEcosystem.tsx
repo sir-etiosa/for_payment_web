@@ -8,23 +8,23 @@ export function ForEcosystem() {
           <div className="p-8 md:p-12">
             <p className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-token">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-token" />
-              The rail underneath · $FOR
+              Ecosystem · Powered by $FOR
             </p>
             <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              A settlement asset you never have to think about.
+              The rail runs quietly in the background.
             </h2>
             <p className="mt-4 max-w-xl leading-relaxed text-slate">
-              $FOR is the utility asset that settles transactions and secures the
-              FirstRound network. As a merchant, you price, invoice, and get paid
-              out in the currencies you already use — the $FOR rail does the
-              clearing in the background.
+              FirstRound&apos;s payment network is powered by the $FOR token — but
+              you&apos;ll never notice it. As a merchant, you price and collect in
+              the currencies you already use. The $FOR rail handles settlement
+              automatically, keeping fees low and speed high.
             </p>
 
             <ul className="mt-6 space-y-3">
               {[
-                "Settles transactions across the network in seconds",
-                "Secures the rail without merchants holding or managing it",
-                "Keeps fees low and predictable versus card networks",
+                "Clears and settles transactions in seconds",
+                "No token management required on the merchant side",
+                "Keeps network fees far below card-network rates",
               ].map((line) => (
                 <li key={line} className="flex items-start gap-3 text-slate">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-token" />
@@ -32,6 +32,18 @@ export function ForEcosystem() {
                 </li>
               ))}
             </ul>
+
+            <a
+              href="https://www.firstroundcoin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex items-center gap-1.5 font-sans text-sm font-semibold text-token hover:text-navy transition-colors"
+            >
+              Learn more about $FOR at firstroundcoin.com
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+            </a>
           </div>
 
           <div className="flex flex-col justify-center gap-4 border-t border-line bg-token-soft/40 p-8 md:border-l md:border-t-0 md:p-12">
@@ -42,7 +54,7 @@ export function ForEcosystem() {
               <p className="mt-1 font-mono text-2xl tabular-nums text-ink">$128.40</p>
             </div>
             <div className="flex items-center justify-center font-mono text-xs text-token">
-              ↓ settled via $FOR rail ↓
+              ↓ cleared by $FOR rail ↓
             </div>
             <div className="rounded-xl border border-settle/30 bg-white p-5">
               <p className="font-mono text-xs uppercase tracking-[0.14em] text-slate">

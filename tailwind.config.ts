@@ -8,25 +8,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core brand
-        navy: "#222A44",        // primary dark — nav, footer, dark sections, primary buttons
-        "navy-deep": "#141B2D", // deeper navy for overlays
-        ink: "#111827",         // body text (dark)
-        slate: "#6B7280",       // muted body text
-        paper: "#F9FAFB",       // page background
-        cream: "#FFFBF0",       // warm hero tint
-        line: "#E5E7EB",        // borders
+        // Core brand — firstroundcoin.com blue palette, one shade darker
+        navy: "#152E74",        // darker than firstroundcoin's #1E3A8A — nav, footer, buttons
+        "navy-deep": "#0C1D4E", // for dark section overlays
+        ink: "#0D1324",         // darkest body text
+        slate: "#475569",       // muted body text (darker than default gray-500)
+        paper: "#EEF4FF",       // page background (darker blue tint vs #EFF6FF)
+        cream: "#E4EDFF",       // hero/section tint
+        line: "#BFCFED",        // borders
         // Accents
-        gold: "#D4AF37",        // warm classic gold — THE primary accent
-        "gold-soft": "#FEF9E7", // light gold tint for card icons
-        "gold-dark": "#B8941C", // hover/pressed gold
-        settle: "#16A34A",      // muted green — success/settled states ONLY
-        "settle-soft": "#DCFCE7",
+        gold: "#C89B00",        // darker than firstroundcoin's #FFD641
+        "gold-soft": "#FFF3C2", // light gold tint for card icons
+        "gold-dark": "#A07A00", // hover/click — noticeably darker
+        settle: "#15803D",      // darker success green
+        "settle-soft": "#BBF7D0",
         // Legacy aliases (keep so existing classes don't break)
-        token: "#D4AF37",
-        "token-soft": "#FEF9E7",
-        void: "#141B2D",
-        ink2: "#0A0D14",
+        token: "#C89B00",
+        "token-soft": "#FFF3C2",
+        void: "#0C1D4E",
+        ink2: "#060C1F",
       },
       fontFamily: {
         display: ["var(--font-display)", "Lato", "system-ui", "sans-serif"],
@@ -40,7 +40,7 @@ const config: Config = {
       boxShadow: {
         card: "0 1px 2px rgba(6,8,13,0.06), 0 8px 30px rgba(6,8,13,0.10)",
         lift: "0 24px 80px rgba(6,8,13,0.50)",
-        glow: "0 0 40px rgba(212,175,55,0.15)",
+        glow: "0 0 40px rgba(200,155,0,0.22)",
       },
       keyframes: {
         "rail-flow": {

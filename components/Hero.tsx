@@ -7,7 +7,7 @@ export function Hero() {
     <div
       className="relative overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #FFFBF0 0%, #F9FAFB 50%, #EEF2FF 100%)",
+        background: "linear-gradient(135deg, #E4EDFF 0%, #EEF4FF 50%, #DDE8FF 100%)",
       }}
     >
       {/* Decorative circles (like old site) */}
@@ -20,33 +20,31 @@ export function Hero() {
 
           {/* Left — copy */}
           <div className="animate-fade-up">
-            <p className="eyebrow">Detroit-Built · Global Payments</p>
+            <p className="eyebrow">Merchant Payment Network · Detroit-Built</p>
 
             <h1 className="mt-4 font-display text-[2.8rem] font-black leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl">
-              Payment
+              Get paid faster.
               <br />
-              infrastructure
-              <br />
-              built for real
+              Keep more of it.
               <br />
               <span className="relative inline-block">
-                commerce.
+                Settle in seconds.
                 <span className="absolute -bottom-1 left-0 h-1 w-full rounded-full bg-gold/60" />
               </span>
             </h1>
 
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-slate">
-              First Round Payments is a non-custodial payment network that helps
-              businesses accept, send, and settle payments with lower fees and
-              instant settlement — no crypto knowledge required.
+              First Round is the payment network built for merchants — slash
+              processing fees by up to 70%, get instant settlement, and own your
+              money outright. No crypto knowledge required.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/merchants#apply" size="lg">
-                Get started →
+                Start accepting payments →
               </ButtonLink>
               <ButtonLink href="/merchants" variant="ghost" size="lg">
-                For Merchants
+                See how it works
               </ButtonLink>
             </div>
 
@@ -56,7 +54,7 @@ export function Hero() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
               </svg>
               <span className="text-sm text-slate">
-                Non-Custodial · Secure · Compliant · You own your funds.
+                Non-Custodial · KYC Verified · ISO 20022 · You own your funds.
               </span>
             </div>
           </div>
