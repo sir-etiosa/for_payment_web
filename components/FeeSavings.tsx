@@ -104,7 +104,8 @@ export function FeeSavings() {
             </div>
             <p className="mt-4 font-mono text-[11px] leading-relaxed text-white/40">
               Estimate only. Actual fees depend on transaction mix, average
-              ticket size, and verified merchant terms.
+              ticket size, and verified merchant terms. Fees could be
+              significantly lower for payments made via $FOR and USDC.
             </p>
           </div>
         </div>

@@ -35,8 +35,8 @@ export function Hero() {
 
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-slate">
               First Round is the payment network built for merchants — slash
-              processing fees by up to 70%, get instant settlement, and own your
-              money outright. No crypto knowledge required.
+              processing fees by up to 97%, get instant settlement, and own your
+              money outright. Merchant onboarding is simple and straightforward.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -71,7 +71,7 @@ export function Hero() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold text-ink">Up to 70% lower fees</p>
+                <p className="text-sm font-semibold text-ink">Up to 97% lower fees</p>
                 <p className="text-xs text-slate">vs. traditional card processing</p>
               </div>
             </div>

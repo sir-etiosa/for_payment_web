@@ -28,7 +28,7 @@ export function Navbar() {
         scrolled ? "shadow-md" : "border-b border-line"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
@@ -41,8 +41,8 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-7 lg:flex">
+        {/* Desktop nav — centered in the space between logo and CTA */}
+        <nav className="hidden items-center justify-center gap-6 lg:flex">
           {links.map(({ label, href, external }) =>
             external ? (
               <a
@@ -50,7 +50,7 @@ export function Navbar() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-1 font-sans text-sm font-semibold text-token transition hover:text-navy"
+                className="py-1 font-sans text-base font-bold text-token transition hover:text-navy"
               >
                 {label}
               </a>
@@ -58,7 +58,7 @@ export function Navbar() {
               <Link
                 key={label}
                 href={href}
-                className="group relative py-1 font-sans text-sm font-semibold text-ink transition hover:text-navy"
+                className="group relative py-1 font-sans text-base font-bold text-ink transition hover:text-navy"
               >
                 {label}
                 <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gold transition-all duration-300 group-hover:w-full rounded-full" />
@@ -71,7 +71,7 @@ export function Navbar() {
         <div className="hidden sm:block">
           <Link
             href="/merchants#apply"
-            className="rounded-xl bg-navy px-5 py-2.5 font-sans text-sm font-bold text-white shadow transition hover:bg-navy-deep hover:shadow-lg"
+            className="rounded-xl bg-navy px-6 py-3 font-sans text-base font-bold text-white shadow transition hover:bg-navy-deep hover:shadow-lg"
           >
             Get started
           </Link>

@@ -13,7 +13,7 @@ export const SITE = {
 // Network performance figures shown in the trust strip / hero.
 export const METRICS = {
   settlementTime: "~3s",
-  networkFee: "0.8%",
+  networkFee: "0.1%",
   uptime: "99.9%",
   standard: "ISO 20022",
 };
@@ -22,7 +22,7 @@ export const METRICS = {
 export const FEES = {
   cardPercent: 0.029, // 2.9%
   cardFlat: 0.3, // $0.30 per transaction
-  firstRoundPercent: 0.008, // 0.8%
+  firstRoundPercent: 0.001, // 0.1%
   firstRoundFlat: 0, // no per-transaction flat fee
   avgTicket: 45, // assumed average transaction size for tx-count math
 };
@@ -89,9 +89,9 @@ export const COMPLIANCE = [
 
 export const MERCHANT_BENEFITS = [
   {
-    stat: "Up to 90%",
+    stat: "Up to 97%",
     label: "lower fees",
-    body: "Replace 2.9% + 30¢ card economics with a flat network fee under 1%.",
+    body: "Replace 2.9% + 30¢ card economics with FirstRound's flat network fee — the savings are dramatic.",
   },
   {
     stat: "~3 seconds",
