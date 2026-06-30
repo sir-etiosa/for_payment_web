@@ -22,7 +22,7 @@ const mono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "FirstRound — Merchant Payment Network",
   description:
-    "Accept payments and settle in seconds. FirstRound is a non-custodial payment network for merchants.",
+    "Instant settlement for merchants. FirstRound is a non-custodial payment network — funds settle in seconds, fees drop dramatically, and you own your money outright.",
 };
 
 export default function RootLayout({

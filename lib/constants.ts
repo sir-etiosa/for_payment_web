@@ -3,7 +3,7 @@
 
 export const SITE = {
   name: "FirstRound",
-  tagline: "The merchant payment network. Lower fees, instant settlement, zero chargebacks.",
+  tagline: "The merchant payment network. Instant settlement, lower fees, zero chargebacks.",
   email: "support@firstroundcoin.com",
   phone: "+1 616 259 5438",
   location: "Detroit, Michigan",
@@ -89,14 +89,14 @@ export const COMPLIANCE = [
 
 export const MERCHANT_BENEFITS = [
   {
+    stat: "~3 seconds",
+    label: "to settle",
+    body: "No multi-day holds or weekend delays. Funds land in your account almost immediately.",
+  },
+  {
     stat: "Up to 97%",
     label: "lower fees",
     body: "Replace 2.9% + 30¢ card economics with FirstRound's flat network fee — the savings are dramatic.",
-  },
-  {
-    stat: "~3 seconds",
-    label: "to settle",
-    body: "No multi-day holds or weekend delays. Funds are spendable almost immediately.",
   },
   {
     stat: "Zero",

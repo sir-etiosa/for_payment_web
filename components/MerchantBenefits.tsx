@@ -16,7 +16,7 @@ export function MerchantBenefits() {
             to get paid.
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate">
-            Lower fees. Instant settlement. Zero chargebacks. Built for
+            Instant settlement. Lower fees. Zero chargebacks. Built for
             businesses that move fast and keep their margins.
           </p>
         </div>

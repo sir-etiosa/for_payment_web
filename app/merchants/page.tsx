@@ -8,7 +8,7 @@ import { OnboardingForm } from "@/components/OnboardingForm";
 export const metadata = {
   title: "For Merchants — FirstRound Payment Network",
   description:
-    "Accept payments with up to 97% lower fees, instant settlement, and zero chargebacks. Join the FirstRound merchant network.",
+    "Instant settlement for your business. Join the FirstRound merchant network — funds clear in seconds, processing costs drop, and zero chargebacks.",
 };
 
 export default function MerchantsPage() {

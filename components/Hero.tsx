@@ -23,20 +23,20 @@ export function Hero() {
             <p className="eyebrow">Merchant Payment Network · Detroit-Built</p>
 
             <h1 className="mt-4 font-display text-[2.8rem] font-black leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl">
-              Get paid faster.
-              <br />
-              Keep more of it.
-              <br />
               <span className="relative inline-block">
-                Settle in seconds.
+                Instant settlement.
                 <span className="absolute -bottom-1 left-0 h-1 w-full rounded-full bg-gold/60" />
               </span>
+              <br />
+              Real money.
+              <br />
+              Your account.
             </h1>
 
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-slate">
-              First Round is the payment network built for merchants — slash
-              processing fees by up to 97%, get instant settlement, and own your
-              money outright. Merchant onboarding is simple and straightforward.
+              First Round is the merchant payment network — funds settle in
+              seconds, processing costs drop dramatically, and you hold your
+              money outright. Onboarding is simple and straightforward.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -71,8 +71,8 @@ export function Hero() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-semibold text-ink">Up to 97% lower fees</p>
-                <p className="text-xs text-slate">vs. traditional card processing</p>
+                <p className="text-sm font-semibold text-ink">Payments settle in ~3 seconds</p>
+                <p className="text-xs text-slate">directly to your merchant account</p>
               </div>
             </div>
           </div>

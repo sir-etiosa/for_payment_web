@@ -14,17 +14,17 @@ export function ForEcosystem() {
               The rail runs quietly in the background.
             </h2>
             <p className="mt-4 max-w-xl leading-relaxed text-slate">
-              FirstRound&apos;s payment network is powered by the $FOR token — but
-              you&apos;ll never notice it. As a merchant, you price and collect in
-              the currencies you already use. The $FOR rail handles settlement
-              automatically, keeping fees low and speed high.
+              $FOR is the network asset behind FirstRound&apos;s infrastructure.
+              As a merchant, you price and collect in the currencies you already
+              use — the network handles clearing automatically, keeping fees low
+              and settlement fast.
             </p>
 
             <ul className="mt-6 space-y-3">
               {[
-                "Clears and settles transactions in seconds",
+                "Network clears and confirms transactions in seconds",
                 "No token management required on the merchant side",
-                "Keeps network fees far below card-network rates",
+                "Designed to keep processing costs far below card-network rates",
               ].map((line) => (
                 <li key={line} className="flex items-start gap-3 text-slate">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-token" />
@@ -54,7 +54,7 @@ export function ForEcosystem() {
               <p className="mt-1 font-mono text-2xl tabular-nums text-ink">$128.40</p>
             </div>
             <div className="flex items-center justify-center font-mono text-xs text-token">
-              ↓ cleared by $FOR rail ↓
+              ↓ cleared by the network ↓
             </div>
             <div className="rounded-xl border border-settle/30 bg-white p-5">
               <p className="font-mono text-xs uppercase tracking-[0.14em] text-slate">
