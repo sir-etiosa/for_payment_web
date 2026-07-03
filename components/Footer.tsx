@@ -53,22 +53,6 @@ const NAV_COLS: { heading: string; links: { label: string; href: string; externa
 export function Footer() {
   return (
     <footer className="bg-navy text-white">
-      {/* Partners strip */}
-      <div className="border-b border-white/10">
-        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.16em] text-white/30">
-            Trusted by Innovators
-          </p>
-          <div className="flex flex-wrap items-center gap-10">
-            {["Circle", "Coinbase", "Solana", "AWS"].map((name) => (
-              <span key={name} className="font-display text-base font-bold tracking-wide text-white/30">
-                {name}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Nav columns */}
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
