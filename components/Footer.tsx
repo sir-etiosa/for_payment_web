@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/constants";
 
-const NAV_COLS = [
+const NAV_COLS: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
   {
     heading: "For Merchants",
     links: [
@@ -15,7 +15,7 @@ const NAV_COLS = [
   {
     heading: "Products",
     links: [
-      { label: "Wallet", href: "/#wallet" },
+      { label: "Wallet (Android)", href: "https://play.google.com/store/apps/details?id=com.firstround.wallet&pli=1", external: true },
       { label: "Payments", href: "/#payments" },
       { label: "Cards", href: "/#cards" },
       { label: "Payouts", href: "/#payouts" },
@@ -89,6 +89,23 @@ export function Footer() {
             <p className="mt-3 text-xs text-white/30">
               {SITE.email}<br />{SITE.phone}
             </p>
+
+            {/* Google Play badge */}
+            <a
+              href="https://play.google.com/store/apps/details?id=com.firstround.wallet&pli=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2.5 transition hover:border-white/30 hover:bg-white/10"
+            >
+              {/* Google Play icon */}
+              <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3.18 23.76a2 2 0 01-.93-.24 2 2 0 01-1-1.76V2.24A2 2 0 012.25.48a2 2 0 01.93-.24l11.44 11.52zM20.13 13.4l-2.37 1.37-2.56-2.57 2.56-2.57 2.38 1.38a1.4 1.4 0 010 2.39zM4.88 23.27L15.2 12.95l-2.56-2.57L4.88.73z" />
+              </svg>
+              <div>
+                <p className="text-[10px] leading-none text-white/40">Get it on</p>
+                <p className="mt-0.5 text-sm font-semibold leading-none text-white/80">Google Play</p>
+              </div>
+            </a>
           </div>
 
           {/* Link columns */}
@@ -98,11 +115,22 @@ export function Footer() {
                 {col.heading}
               </p>
               <ul className="space-y-2.5">
-                {col.links.map(({ label, href }) => (
+                {col.links.map(({ label, href, external }) => (
                   <li key={label}>
-                    <Link href={href} className="text-sm text-white/40 transition hover:text-white">
-                      {label}
-                    </Link>
+                    {external ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-white/40 transition hover:text-white"
+                      >
+                        {label}
+                      </a>
+                    ) : (
+                      <Link href={href} className="text-sm text-white/40 transition hover:text-white">
+                        {label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

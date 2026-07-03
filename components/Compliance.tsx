@@ -12,7 +12,7 @@ export function Compliance() {
           </h2>
           <p className="mt-4 text-lg text-slate">
             FirstRound is non-custodial by architecture and verified by process.
-            Compliance isn&apos;t a badge here — it&apos;s how the network is wired.
+            Compliance isn&apos;t a badge, it&apos;s how the network is wired.
           </p>
 
           <div className="mt-8 inline-flex flex-wrap gap-2">
