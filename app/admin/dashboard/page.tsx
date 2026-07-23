@@ -128,7 +128,7 @@ export default function AdminDashboard() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-xs font-mono text-zinc-600 tracking-widest uppercase">Base · {process.env.NEXT_PUBLIC_CHAIN_ID}</span>
+          <span className="text-xs font-mono text-zinc-600 tracking-widest uppercase">Base Mainnet</span>
         </div>
         {address ? (
           <div className="flex items-center gap-3">
