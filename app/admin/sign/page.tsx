@@ -12,14 +12,10 @@ function shortenHash(h: string) { return `${h.slice(0, 10)}…${h.slice(-8)}` }
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`border border-[#0f1923] rounded-xl bg-[#060d14] shadow-[0_0_0_1px_rgba(200,155,0,0.03),inset_0_1px_0_rgba(255,255,255,0.02)] ${className}`}>
+    <div className={`border border-[#0e1b35] rounded-xl bg-[#091222] shadow-[0_0_0_1px_rgba(21,46,116,0.06),inset_0_1px_0_rgba(255,255,255,0.02)] ${className}`}>
       {children}
     </div>
   )
-}
-
-function Label({ children }: { children: React.ReactNode }) {
-  return <p className="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-600">{children}</p>
 }
 
 export default function SignPage() {
@@ -101,34 +97,34 @@ export default function SignPage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8 space-y-5">
-      <Link href="/admin/dashboard" className="text-[10px] font-mono text-zinc-700 hover:text-zinc-400 transition-colors tracking-widest uppercase">
+      <Link href="/admin/dashboard" className="text-[10px] font-sans text-[#3a527a] hover:text-[#a8c0e8] transition-colors tracking-widest uppercase">
         ← Dashboard
       </Link>
 
       {!address ? (
         <Card className="p-8 text-center space-y-4">
-          <p className="text-zinc-600 font-mono text-sm">Connect Signer 2&apos;s wallet to co-sign.</p>
+          <p className="text-[#4a6585] font-sans text-sm">Connect Signer 2&apos;s wallet to co-sign.</p>
           <button onClick={connect} disabled={isConnecting}
-            className="bg-[#C89B00] hover:bg-[#A07A00] text-black text-xs font-mono font-bold px-4 py-2 rounded-lg disabled:opacity-50 transition-colors tracking-wider uppercase">
+            className="bg-[#152e74] hover:bg-[#0d1e52] text-white text-xs font-sans font-semibold px-5 py-2.5 rounded-lg disabled:opacity-50 transition-colors tracking-wide">
             {isConnecting ? 'Connecting…' : 'Connect Wallet'}
           </button>
         </Card>
       ) : !isSigner2 ? (
         <Card className="p-5 border-red-900/50 space-y-1">
-          <p className="text-red-400 font-mono text-sm font-semibold">⊘ Wrong wallet — only Signer 2 can co-sign</p>
+          <p className="text-red-400 font-sans text-sm font-semibold">⊘ Wrong wallet — only Signer 2 can co-sign</p>
           <p className="text-[10px] font-mono text-red-600">Expected: {SIGNER_2_ADDRESS}</p>
           <p className="text-[10px] font-mono text-red-600">Connected: {address}</p>
         </Card>
       ) : loading ? (
         <div className="text-center py-16">
-          <p className="text-[10px] font-mono text-zinc-700 tracking-widest uppercase animate-pulse">Loading proposals…</p>
+          <p className="text-[10px] font-mono text-[#3a527a] tracking-widest uppercase animate-pulse">Loading proposals…</p>
         </div>
       ) : proposals.length === 0 ? (
         <Card className="p-10 text-center space-y-2">
-          <p className="text-zinc-600 font-mono text-sm">No proposals found.</p>
-          <p className="text-[10px] font-mono text-zinc-700">
+          <p className="text-[#4a6585] font-sans text-sm">No proposals found.</p>
+          <p className="text-[10px] font-sans text-[#3a527a]">
             Ask Signer 1 to go to{' '}
-            <Link href="/admin/propose" className="text-[#C89B00] hover:underline">/admin/propose</Link>
+            <Link href="/admin/propose" className="text-[#5b8dee] hover:underline">/admin/propose</Link>
           </p>
         </Card>
       ) : (
@@ -141,27 +137,27 @@ export default function SignPage() {
                 <div className="p-5 space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-mono font-semibold text-zinc-200">{p.label}</p>
-                      <p className="text-[10px] font-mono text-zinc-600 mt-0.5">Proposal #{key}</p>
+                      <p className="font-display font-bold text-[#e4eeff]">{p.label}</p>
+                      <p className="text-[10px] font-mono text-[#3a527a] mt-0.5">Proposal #{key}</p>
                     </div>
                     <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border tracking-widest uppercase ${
                       p.executed
                         ? 'bg-emerald-950/50 text-emerald-400 border-emerald-900/50 shadow-[0_0_8px_rgba(52,211,153,0.1)]'
-                        : 'bg-[#C89B00]/8 text-[#C89B00] border-[#C89B00]/20'
+                        : 'bg-[#152e74]/10 text-[#C89B00] border-[#C89B00]/20'
                     }`}>
                       {p.executed ? '⊙ Deployed' : '◌ Pending'}
                     </span>
                   </div>
 
-                  <div className="space-y-2 bg-[#020509] border border-[#0f1923] rounded-lg p-3">
+                  <div className="space-y-2 bg-[#060c1a] border border-[#0e1b35] rounded-lg p-3">
                     {[
-                      { label: 'Bytecode hash', value: shortenHash(p.bytecodeHash) },
-                      { label: 'Signer 1',      value: `${SIGNER_1_ADDRESS.slice(0,10)}…` },
-                      { label: 'Signer 2 (you)', value: `${SIGNER_2_ADDRESS.slice(0,10)}…` },
+                      { label: 'Bytecode hash',  value: shortenHash(p.bytecodeHash) },
+                      { label: 'Signer 1',        value: `${SIGNER_1_ADDRESS.slice(0,10)}…` },
+                      { label: 'Signer 2 (you)',  value: `${SIGNER_2_ADDRESS.slice(0,10)}…` },
                     ].map(({ label, value }) => (
                       <div key={label} className="flex justify-between gap-2 text-[10px] font-mono">
-                        <span className="text-zinc-600">{label}</span>
-                        <span className="text-zinc-400">{value}</span>
+                        <span className="text-[#3a527a]">{label}</span>
+                        <span className="text-[#7a95c0]">{value}</span>
                       </div>
                     ))}
                   </div>
@@ -172,7 +168,7 @@ export default function SignPage() {
                       <p className="font-mono text-xs text-emerald-500 break-all">{deployed}</p>
                       <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/address/${deployed}`}
                         target="_blank" rel="noreferrer"
-                        className="text-[10px] font-mono text-[#C89B00] hover:underline">
+                        className="text-[10px] font-mono text-[#5b8dee] hover:underline">
                         View on Basescan ↗
                       </a>
                     </div>
@@ -180,15 +176,15 @@ export default function SignPage() {
 
                   {!p.executed && (
                     <>
-                      <div className="bg-[#020509] border border-[#0f1923] rounded-lg p-3 space-y-1.5">
-                        <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Verify before signing</p>
-                        <ul className="text-[10px] font-mono text-zinc-600 list-disc list-inside space-y-1">
+                      <div className="bg-[#060c1a] border border-[#0e1b35] rounded-lg p-3 space-y-1.5">
+                        <p className="text-[10px] font-sans font-semibold text-[#4a6585] uppercase tracking-wide">Verify before signing</p>
+                        <ul className="text-[10px] font-sans text-[#3a527a] list-disc list-inside space-y-1">
                           <li>Label matches what Signer 1 told you</li>
                           <li>Bytecode hash matches the compiled output you both agreed on</li>
                         </ul>
                       </div>
                       <button onClick={() => handleApprove(p)} disabled={pending[key]}
-                        className="w-full bg-[#C89B00] hover:bg-[#A07A00] disabled:opacity-30 text-black font-mono font-bold py-3 rounded-lg transition-colors text-sm tracking-wider uppercase">
+                        className="w-full bg-[#C89B00] hover:bg-[#A07A00] disabled:opacity-30 text-black font-sans font-bold py-3 rounded-lg transition-colors text-sm tracking-wide">
                         {pending[key] ? statuses[key] : 'Co-sign & Deploy'}
                       </button>
                     </>

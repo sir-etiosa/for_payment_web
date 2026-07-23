@@ -14,21 +14,17 @@ type Mode = 'forswap' | 'custom'
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`border border-[#0f1923] rounded-xl bg-[#060d14] shadow-[0_0_0_1px_rgba(200,155,0,0.03),inset_0_1px_0_rgba(255,255,255,0.02)] ${className}`}>
+    <div className={`border border-[#0e1b35] rounded-xl bg-[#091222] shadow-[0_0_0_1px_rgba(21,46,116,0.06),inset_0_1px_0_rgba(255,255,255,0.02)] ${className}`}>
       {children}
     </div>
   )
 }
 
-function Label({ children }: { children: React.ReactNode }) {
-  return <p className="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-600">{children}</p>
-}
-
 function Row({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
   return (
     <div className="space-y-1">
-      <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-wider">{label}</p>
-      <p className={`text-xs bg-[#020509] border border-[#0f1923] px-3 py-2 rounded-lg break-all text-zinc-400 ${mono ? 'font-mono' : ''}`}>
+      <p className="text-[10px] font-sans font-semibold text-[#3a527a] uppercase tracking-wide">{label}</p>
+      <p className={`text-xs bg-[#060c1a] border border-[#0e1b35] px-3 py-2 rounded-lg break-all text-[#7a95c0] ${mono ? 'font-mono' : 'font-sans'}`}>
         {value}
       </p>
     </div>
@@ -99,32 +95,32 @@ export default function ProposePage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8 space-y-5">
-      <Link href="/admin/dashboard" className="text-[10px] font-mono text-zinc-700 hover:text-zinc-400 transition-colors tracking-widest uppercase">
+      <Link href="/admin/dashboard" className="text-[10px] font-sans text-[#3a527a] hover:text-[#a8c0e8] transition-colors tracking-widest uppercase">
         ← Dashboard
       </Link>
 
       {!address ? (
         <Card className="p-8 text-center space-y-4">
-          <p className="text-zinc-600 font-mono text-sm">Connect Signer 1&apos;s wallet to propose.</p>
+          <p className="text-[#4a6585] font-sans text-sm">Connect Signer 1&apos;s wallet to propose.</p>
           <button onClick={connect} disabled={isConnecting}
-            className="bg-[#C89B00] hover:bg-[#A07A00] text-black text-xs font-mono font-bold px-4 py-2 rounded-lg disabled:opacity-50 transition-colors tracking-wider uppercase">
+            className="bg-[#152e74] hover:bg-[#0d1e52] text-white text-xs font-sans font-semibold px-5 py-2.5 rounded-lg disabled:opacity-50 transition-colors tracking-wide">
             {isConnecting ? 'Connecting…' : 'Connect Wallet'}
           </button>
         </Card>
       ) : !isSigner1 ? (
         <Card className="p-5 border-red-900/50 space-y-1">
-          <p className="text-red-400 font-mono text-sm font-semibold">⊘ Wrong wallet — only Signer 1 can propose</p>
+          <p className="text-red-400 font-sans text-sm font-semibold">⊘ Wrong wallet — only Signer 1 can propose</p>
           <p className="text-[10px] font-mono text-red-600">Expected: {SIGNER_1_ADDRESS}</p>
           <p className="text-[10px] font-mono text-red-600">Connected: {address}</p>
         </Card>
       ) : (
         <div className="space-y-4">
           {/* Mode toggle */}
-          <div className="flex rounded-lg border border-[#0f1923] overflow-hidden">
+          <div className="flex rounded-lg border border-[#0e1b35] overflow-hidden">
             {(['forswap', 'custom'] as Mode[]).map(m => (
               <button key={m} onClick={() => setMode(m)}
-                className={`flex-1 py-2 text-[10px] font-mono font-bold tracking-widest uppercase transition-colors ${
-                  mode === m ? 'bg-[#C89B00] text-black' : 'bg-[#060d14] text-zinc-600 hover:text-zinc-300'
+                className={`flex-1 py-2 text-[10px] font-sans font-bold tracking-widest uppercase transition-colors ${
+                  mode === m ? 'bg-[#152e74] text-white' : 'bg-[#091222] text-[#3a527a] hover:text-[#a8c0e8]'
                 }`}>
                 {m === 'forswap' ? 'ForSwap Template' : 'Custom Contract'}
               </button>
@@ -133,8 +129,8 @@ export default function ProposePage() {
 
           <Card className="p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <Label>Proposal #{String(proposalCount)}</Label>
-              <span className="text-[10px] font-mono text-zinc-700">next nonce</span>
+              <p className="text-[10px] font-sans font-semibold tracking-[0.18em] uppercase text-[#3a527a]">Proposal #{String(proposalCount)}</p>
+              <span className="text-[10px] font-mono text-[#2d4166]">next nonce</span>
             </div>
 
             {mode === 'forswap' ? (
@@ -149,41 +145,41 @@ export default function ProposePage() {
             ) : (
               <div className="space-y-3">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-wider">Label</label>
+                  <label className="text-[10px] font-sans font-semibold text-[#3a527a] uppercase tracking-wide">Label</label>
                   <input value={customLabel} onChange={e => setCustomLabel(e.target.value)}
                     placeholder="e.g. MyContract v1"
-                    className="w-full bg-[#020509] border border-[#0f1923] focus:border-[#C89B00]/30 rounded-lg px-3 py-2 text-sm font-mono text-zinc-300 focus:outline-none placeholder-zinc-800 transition-colors" />
+                    className="w-full bg-[#060c1a] border border-[#0e1b35] focus:border-[#152e74]/60 rounded-lg px-3 py-2 text-sm font-sans text-[#e4eeff] focus:outline-none placeholder-[#2d4166] transition-colors" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-wider">Bytecode (hex)</label>
+                  <label className="text-[10px] font-sans font-semibold text-[#3a527a] uppercase tracking-wide">Bytecode (hex)</label>
                   <textarea value={customBytecode} onChange={e => setCustomBytecode(e.target.value)}
                     placeholder="0x..."  rows={5}
-                    className="w-full bg-[#020509] border border-[#0f1923] focus:border-[#C89B00]/30 rounded-lg px-3 py-2 text-xs font-mono text-zinc-300 focus:outline-none resize-none placeholder-zinc-800 transition-colors" />
-                  <p className="text-[10px] font-mono text-zinc-700">
-                    <code className="text-zinc-500">forge inspect YourContract bytecode</code> + ABI-encoded constructor args
+                    className="w-full bg-[#060c1a] border border-[#0e1b35] focus:border-[#152e74]/60 rounded-lg px-3 py-2 text-xs font-mono text-[#e4eeff] focus:outline-none resize-none placeholder-[#2d4166] transition-colors" />
+                  <p className="text-[10px] font-mono text-[#2d4166]">
+                    <code className="text-[#4a6585]">forge inspect YourContract bytecode</code> + ABI-encoded constructor args
                   </p>
                 </div>
               </div>
             )}
 
-            <div className="border-t border-[#0f1923] pt-4 space-y-3">
-              <div className="bg-[#020509] border border-[#0f1923] rounded-lg p-3 space-y-1.5">
-                <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Execution flow</p>
-                <ol className="text-[10px] font-mono text-zinc-600 space-y-1 list-decimal list-inside">
+            <div className="border-t border-[#0e1b35] pt-4 space-y-3">
+              <div className="bg-[#060c1a] border border-[#0e1b35] rounded-lg p-3 space-y-1.5">
+                <p className="text-[10px] font-sans font-semibold text-[#4a6585] uppercase tracking-wide">Execution flow</p>
+                <ol className="text-[10px] font-sans text-[#3a527a] space-y-1 list-decimal list-inside leading-relaxed">
                   <li>MetaMask shows EIP-712 typed data — you sign the bytecodeHash + label</li>
-                  <li>Proposal stored on-chain, <span className="text-zinc-400">ProposalCreated</span> event emitted</li>
+                  <li>Proposal stored on-chain, <span className="font-mono text-[#7a95c0]">ProposalCreated</span> event emitted</li>
                   <li>Signer 2 sees it live at /admin/sign and co-signs</li>
                   <li>Factory deploys the contract via CREATE opcode</li>
                 </ol>
               </div>
 
               <button onClick={handlePropose} disabled={isPending}
-                className="w-full bg-[#C89B00] hover:bg-[#A07A00] disabled:opacity-30 text-black font-mono font-bold py-3 rounded-lg transition-colors text-sm tracking-wider uppercase">
+                className="w-full bg-[#C89B00] hover:bg-[#A07A00] disabled:opacity-30 text-black font-sans font-bold py-3 rounded-lg transition-colors text-sm tracking-wide">
                 {isPending ? status : 'Sign & Propose'}
               </button>
 
               {status && !isPending && (
-                <p className={`text-xs font-mono ${proposalId !== null ? 'text-emerald-400' : 'text-zinc-500'}`}>
+                <p className={`text-xs font-mono ${proposalId !== null ? 'text-emerald-400' : 'text-[#4a6585]'}`}>
                   {status}
                 </p>
               )}
@@ -192,7 +188,7 @@ export default function ProposePage() {
                 <div className="bg-emerald-950/20 border border-emerald-900/50 rounded-lg p-3 space-y-2 shadow-[0_0_12px_rgba(52,211,153,0.05)]">
                   <p className="text-emerald-400 font-mono text-xs">⊙ Proposal #{String(proposalId)} submitted on-chain</p>
                   <Link href="/admin/sign"
-                    className="inline-block text-[10px] font-mono bg-emerald-900/40 hover:bg-emerald-900/70 border border-emerald-800/50 text-emerald-300 px-3 py-1.5 rounded-lg transition-colors tracking-wider uppercase">
+                    className="inline-block text-[10px] font-sans font-semibold bg-emerald-900/40 hover:bg-emerald-900/70 border border-emerald-800/50 text-emerald-300 px-3 py-1.5 rounded-lg transition-colors tracking-wide">
                     Go to Sign →
                   </Link>
                 </div>
