@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { WalletProvider } from '@/context/WalletContext'
+import { Footer } from '@/components/Footer'
 
 const navLinks = [
   { label: 'Dashboard', href: '/admin/dashboard' },
@@ -62,35 +63,6 @@ function AdminNav() {
   )
 }
 
-function AdminFooter() {
-  return (
-    <footer className="border-t border-[#0f1923] bg-[#020509] mt-16">
-      <div className="mx-auto max-w-5xl px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <Image
-            src="/logo.png"
-            alt="FOR"
-            width={60}
-            height={24}
-            className="h-5 w-auto brightness-0 invert opacity-30"
-          />
-          <span className="text-xs text-zinc-700 font-mono">Admin · Base Mainnet · Chain 8453</span>
-        </div>
-        <div className="flex items-center gap-4 text-xs font-mono text-zinc-700">
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Network Live
-          </span>
-          <a href="https://basescan.org" target="_blank" rel="noreferrer"
-            className="hover:text-zinc-400 transition-colors">
-            Basescan ↗
-          </a>
-          <a href="/" className="hover:text-zinc-400 transition-colors">← Main Site</a>
-        </div>
-      </div>
-    </footer>
-  )
-}
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -103,7 +75,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="relative z-10 flex flex-col min-h-screen">
           <AdminNav />
           <main className="flex-1">{children}</main>
-          <AdminFooter />
+          <Footer />
         </div>
       </div>
     </WalletProvider>
