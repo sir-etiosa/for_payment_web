@@ -7,10 +7,13 @@ import { useWallet } from '@/context/WalletContext'
 import {
   FACTORY_ADDRESS, FOR_TOKEN_ADDRESS, USDC_ADDRESS,
   SIGNER_1_ADDRESS, SIGNER_2_ADDRESS,
-  FACTORY_ABI, FORSWAP_CREATION_BYTECODE,
+  FACTORY_ABI, FORSALE_CREATION_BYTECODE,
 } from '@/lib/contracts'
 
-type Mode = 'forswap' | 'custom'
+const ETH_USD_FEED  = '0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70' as const // Chainlink Base
+const FOR_PRICE_USDC = 200_000n // $0.20 per FOR
+
+type Mode = 'forsale' | 'custom'
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
@@ -33,7 +36,7 @@ function Row({ label, value, mono }: { label: string; value: string; mono?: bool
 
 export default function ProposePage() {
   const { address, walletClient, publicClient, connect, isConnecting } = useWallet()
-  const [mode, setMode]                   = useState<Mode>('forswap')
+  const [mode, setMode]                   = useState<Mode>('forsale')
   const [proposalCount, setProposalCount] = useState<bigint>(0n)
   const [status, setStatus]               = useState('')
   const [isPending, setIsPending]         = useState(false)
@@ -48,17 +51,20 @@ export default function ProposePage() {
       .then(c => setProposalCount(c as bigint)).catch(console.error)
   }, [publicClient])
 
-  function buildForSwapBytecode(): `0x${string}` {
-    const args = encodeAbiParameters(parseAbiParameters('address, address, address, address'),
-      [SIGNER_1_ADDRESS, SIGNER_2_ADDRESS, FOR_TOKEN_ADDRESS, USDC_ADDRESS])
-    return concat([FORSWAP_CREATION_BYTECODE, args]) as `0x${string}`
+  function buildFORSaleBytecode(): `0x${string}` {
+    // Constructor: (address signer1, address signer2, address forToken, address usdc, address ethUsdFeed, uint256 forPriceUSDC)
+    const args = encodeAbiParameters(
+      parseAbiParameters('address, address, address, address, address, uint256'),
+      [SIGNER_1_ADDRESS, SIGNER_2_ADDRESS, FOR_TOKEN_ADDRESS, USDC_ADDRESS, ETH_USD_FEED, FOR_PRICE_USDC]
+    )
+    return concat([FORSALE_CREATION_BYTECODE, args]) as `0x${string}`
   }
 
   async function handlePropose() {
     if (!walletClient || !address) return
     let bytecode: `0x${string}`, label: string
-    if (mode === 'forswap') {
-      bytecode = buildForSwapBytecode(); label = 'ForSwap v1'
+    if (mode === 'forsale') {
+      bytecode = buildFORSaleBytecode(); label = 'FORSale v2'
     } else {
       if (!customLabel.trim()) { setStatus('Enter a label.'); return }
       if (!customBytecode.trim().startsWith('0x')) { setStatus('Bytecode must start with 0x'); return }
@@ -117,12 +123,12 @@ export default function ProposePage() {
         <div className="space-y-4">
           {/* Mode toggle */}
           <div className="flex rounded-lg border border-[#0e1b35] overflow-hidden">
-            {(['forswap', 'custom'] as Mode[]).map(m => (
+            {(['forsale', 'custom'] as Mode[]).map(m => (
               <button key={m} onClick={() => setMode(m)}
                 className={`flex-1 py-2 text-[10px] font-sans font-bold tracking-widest uppercase transition-colors ${
                   mode === m ? 'bg-[#152e74] text-white' : 'bg-[#091222] text-[#3a527a] hover:text-[#a8c0e8]'
                 }`}>
-                {m === 'forswap' ? 'ForSwap Template' : 'Custom Contract'}
+                {m === 'forsale' ? 'FORSale v2' : 'Custom Contract'}
               </button>
             ))}
           </div>
@@ -133,14 +139,15 @@ export default function ProposePage() {
               <span className="text-[10px] font-mono text-[#2d4166]">next nonce</span>
             </div>
 
-            {mode === 'forswap' ? (
+            {mode === 'forsale' ? (
               <div className="space-y-2">
-                <Row label="Label"     value="ForSwap v1" />
-                <Row label="FOR Token" value={FOR_TOKEN_ADDRESS} mono />
-                <Row label="USDC"      value={USDC_ADDRESS} mono />
-                <Row label="Signer 1"  value={SIGNER_1_ADDRESS} mono />
-                <Row label="Signer 2"  value={SIGNER_2_ADDRESS} mono />
-                <Row label="Rate"      value="0.2 USDC = 1 FOR (fixed)" />
+                <Row label="Label"         value="FORSale v2" />
+                <Row label="FOR Token"     value={FOR_TOKEN_ADDRESS} mono />
+                <Row label="USDC"          value={USDC_ADDRESS} mono />
+                <Row label="ETH/USD Feed"  value={ETH_USD_FEED} mono />
+                <Row label="Signer 1"      value={SIGNER_1_ADDRESS} mono />
+                <Row label="Signer 2"      value={SIGNER_2_ADDRESS} mono />
+                <Row label="Price"         value="$0.20 USDC per FOR" />
               </div>
             ) : (
               <div className="space-y-3">
