@@ -11,7 +11,7 @@ import {
 } from '@/lib/contracts'
 
 interface ContractDeployedEvent { proposalId: bigint; deployed: Address; label: string }
-interface SwapEvent { user: Address; usdcIn: bigint; forOut: bigint }
+interface BuyEvent { buyer: Address; usdcIn: bigint; forOut: bigint }
 
 function shortenAddr(a: string) { return `${a.slice(0,6)}…${a.slice(-4)}` }
 function explorerLink(a: string) { return `${process.env.NEXT_PUBLIC_EXPLORER_URL}/address/${a}` }
@@ -30,36 +30,43 @@ function Label({ children }: { children: React.ReactNode }) {
 
 export default function AdminDashboard() {
   const { address, walletClient, publicClient, connect, disconnect, isConnecting } = useWallet()
-  const [deployedSwaps, setDeployedSwaps]   = useState<ContractDeployedEvent[]>([])
-  const [selectedSwap, setSelectedSwap]     = useState<Address | null>(null)
-  const [swapPaused, setSwapPaused]         = useState(false)
-  const [forLiquidity, setForLiquidity]     = useState<bigint>(0n)
-  const [usdcBal, setUsdcBal]               = useState<bigint>(0n)
-  const [recentSwaps, setRecentSwaps]       = useState<SwapEvent[]>([])
-  const [usdcInput, setUsdcInput]           = useState('')
-  const [swapStatus, setSwapStatus]         = useState('')
-  const [isTxPending, setIsTxPending]       = useState(false)
+  const [deployedSwaps, setDeployedSwaps] = useState<ContractDeployedEvent[]>([])
+  const [selectedSwap, setSelectedSwap]   = useState<Address | null>(null)
+  const [swapPaused, setSwapPaused]       = useState(false)
+  const [forBal, setForBal]               = useState<bigint>(0n)
+  const [usdcBal, setUsdcBal]             = useState<bigint>(0n)
+  const [ethBal, setEthBal]               = useState<bigint>(0n)
+  const [forPriceUSDC, setForPriceUSDC]   = useState<bigint>(200_000n)
+  const [recentBuys, setRecentBuys]       = useState<BuyEvent[]>([])
+  const [usdcInput, setUsdcInput]         = useState('')
+  const [swapStatus, setSwapStatus]       = useState('')
+  const [isTxPending, setIsTxPending]     = useState(false)
 
   const loadSwapData = useCallback(async (swapAddr: Address) => {
     try {
-      const [paused, liquidity, usdc] = await Promise.all([
+      const [paused, forBalance, usdc, eth, price] = await Promise.all([
         publicClient.readContract({ address: swapAddr, abi: SWAP_ABI, functionName: 'paused' }),
-        publicClient.readContract({ address: swapAddr, abi: SWAP_ABI, functionName: 'forLiquidity' }),
+        publicClient.readContract({ address: swapAddr, abi: SWAP_ABI, functionName: 'forBalance' }),
         publicClient.readContract({ address: swapAddr, abi: SWAP_ABI, functionName: 'usdcBalance' }),
+        publicClient.readContract({ address: swapAddr, abi: SWAP_ABI, functionName: 'ethBalance' }),
+        publicClient.readContract({ address: swapAddr, abi: SWAP_ABI, functionName: 'forPriceUSDC' }),
       ])
       setSwapPaused(paused as boolean)
-      setForLiquidity(liquidity as bigint)
+      setForBal(forBalance as bigint)
       setUsdcBal(usdc as bigint)
+      setEthBal(eth as bigint)
+      setForPriceUSDC(price as bigint)
+
       const logs = await publicClient.getLogs({
         address: swapAddr,
-        event: { type: 'event', name: 'Swapped', inputs: [
-          { name: 'user',    type: 'address', indexed: true  },
+        event: { type: 'event', name: 'BoughtWithUSDC', inputs: [
+          { name: 'buyer',   type: 'address', indexed: true  },
           { name: 'usdcIn',  type: 'uint256', indexed: false },
           { name: 'forOut',  type: 'uint256', indexed: false },
         ]},
         fromBlock: 0n,
       })
-      setRecentSwaps(logs.slice(-5).reverse().map(l => (l as unknown as { args: SwapEvent }).args))
+      setRecentBuys(logs.slice(-5).reverse().map(l => (l as unknown as { args: BuyEvent }).args))
     } catch (e) { console.error(e) }
   }, [publicClient])
 
@@ -75,7 +82,7 @@ export default function AdminDashboard() {
     }).then(logs => {
       const parsed = logs.map(l => {
         const args = (l as unknown as { args: ContractDeployedEvent }).args
-        if (!args?.deployed) return { proposalId: BigInt(l.topics[1] ?? '0'), deployed: `0x${l.topics[2]?.slice(26)}` as Address, label: 'ForSwap v1' }
+        if (!args?.deployed) return { proposalId: BigInt(l.topics[1] ?? '0'), deployed: `0x${l.topics[2]?.slice(26)}` as Address, label: 'FORSale' }
         return args
       }).filter(a => a?.deployed)
       setDeployedSwaps(parsed)
@@ -85,7 +92,7 @@ export default function AdminDashboard() {
 
   useEffect(() => { if (selectedSwap) loadSwapData(selectedSwap) }, [selectedSwap, loadSwapData])
 
-  async function handleSwap() {
+  async function handleBuyWithUSDC() {
     if (!walletClient || !address || !selectedSwap) return
     const usdcAmount = parseUnits(usdcInput, 6)
     setIsTxPending(true); setSwapStatus('Approving USDC…')
@@ -96,13 +103,13 @@ export default function AdminDashboard() {
         setSwapStatus('Waiting for approval…')
         await publicClient.waitForTransactionReceipt({ hash: approveTx })
       }
-      setSwapStatus('Swapping…')
-      const swapTx = await walletClient.writeContract({ address: selectedSwap, abi: SWAP_ABI, functionName: 'swap', args: [usdcAmount], account: address, chain: null })
+      setSwapStatus('Buying FOR…')
+      const tx = await walletClient.writeContract({ address: selectedSwap, abi: SWAP_ABI, functionName: 'buyWithUSDC', args: [usdcAmount], account: address, chain: null })
       setSwapStatus('Waiting for confirmation…')
-      await publicClient.waitForTransactionReceipt({ hash: swapTx })
-      setSwapStatus('Swap complete!'); setUsdcInput(''); loadSwapData(selectedSwap)
+      await publicClient.waitForTransactionReceipt({ hash: tx })
+      setSwapStatus('Done!'); setUsdcInput(''); loadSwapData(selectedSwap)
     } catch (e: unknown) {
-      setSwapStatus(`Error: ${e instanceof Error ? e.message : String(e)}`)
+      setSwapStatus(`${e instanceof Error ? e.message : String(e)}`)
     } finally { setIsTxPending(false) }
   }
 
@@ -112,11 +119,15 @@ export default function AdminDashboard() {
     try {
       const tx = await walletClient.writeContract({ address: selectedSwap, abi: SWAP_ABI, functionName: 'pause', account: address, chain: null })
       await publicClient.waitForTransactionReceipt({ hash: tx }); setSwapPaused(true)
-    } catch (e: unknown) { alert(`Pause failed: ${e instanceof Error ? e.message : String(e)}`) }
+    } catch (e: unknown) { alert(e instanceof Error ? e.message : String(e)) }
     finally { setIsTxPending(false) }
   }
 
-  const forOut    = usdcInput ? parseFloat(usdcInput) * 5 : 0
+  // Preview: usdcIn * 1e18 / forPriceUSDC
+  const forOut = usdcInput && parseFloat(usdcInput) > 0 && forPriceUSDC > 0n
+    ? parseFloat(usdcInput) * 1e6 / Number(forPriceUSDC)
+    : 0
+
   const isSigner1 = address?.toLowerCase() === SIGNER_1_ADDRESS.toLowerCase()
   const isSigner2 = address?.toLowerCase() === SIGNER_2_ADDRESS.toLowerCase()
   const isSigner  = isSigner1 || isSigner2
@@ -147,7 +158,7 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      {/* Signer admin panel — only visible when connected as signer */}
+      {/* Signer admin panel */}
       {isSigner && (
         <Card className="p-4 flex gap-3 items-center">
           <span className="text-xs font-sans text-[#4a6585] mr-auto tracking-wide uppercase font-medium">Admin Access</span>
@@ -180,7 +191,7 @@ export default function AdminDashboard() {
       {/* Deployed contracts */}
       {deployedSwaps.length > 0 && (
         <Card className="p-4 space-y-2">
-          <Label>Swap Contracts</Label>
+          <Label>Sale Contracts</Label>
           {deployedSwaps.map(s => (
             <button key={String(s.deployed)} onClick={() => setSelectedSwap(s.deployed)}
               className={`w-full text-left flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${
@@ -202,11 +213,11 @@ export default function AdminDashboard() {
         </Card>
       )}
 
-      {/* Swap panel */}
+      {/* Sale panel */}
       {selectedSwap && (
         <Card className="p-5 space-y-5">
           <div className="flex items-center justify-between">
-            <Label>Active Swap</Label>
+            <Label>Active Sale Contract</Label>
             <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border tracking-widest uppercase ${
               swapPaused
                 ? 'bg-red-950/50 text-red-400 border-red-900/50'
@@ -216,14 +227,15 @@ export default function AdminDashboard() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             {[
-              { label: 'FOR Liquidity', value: parseFloat(formatUnits(forLiquidity, 18)).toLocaleString(), unit: 'FOR' },
-              { label: 'USDC Collected', value: `$${parseFloat(formatUnits(usdcBal, 6)).toLocaleString()}`, unit: '' },
+              { label: 'FOR Balance', value: parseFloat(formatUnits(forBal, 18)).toLocaleString(), unit: 'FOR' },
+              { label: 'USDC Balance', value: `$${parseFloat(formatUnits(usdcBal, 6)).toLocaleString()}`, unit: '' },
+              { label: 'ETH Balance', value: parseFloat(formatUnits(ethBal, 18)).toFixed(4), unit: 'ETH' },
             ].map(({ label, value, unit }) => (
               <div key={label} className="bg-[#060c1a] border border-[#0e1b35] rounded-lg p-3">
                 <p className="text-[10px] font-sans font-semibold text-[#3a527a] uppercase tracking-wide">{label}</p>
-                <p className="text-xl font-mono font-semibold text-[#e4eeff] mt-1">{value}</p>
+                <p className="text-lg font-mono font-semibold text-[#e4eeff] mt-1">{value}</p>
                 {unit && <p className="text-[10px] font-mono text-[#2d4166]">{unit}</p>}
               </div>
             ))}
@@ -232,7 +244,7 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-2 text-xs font-mono text-[#3a527a]">
             <span className="text-[#2d4166]">Rate</span>
             <span className="h-px flex-1 bg-[#0e1b35]" />
-            <span className="text-[#5b8dee]">0.2 USDC = 1 FOR</span>
+            <span className="text-[#5b8dee]">${(Number(forPriceUSDC) / 1e6).toFixed(2)} USDC = 1 FOR</span>
           </div>
 
           {!swapPaused && address && (
@@ -244,16 +256,16 @@ export default function AdminDashboard() {
                   placeholder="0.00"
                   className="w-full bg-[#060c1a] border border-[#0e1b35] focus:border-[#152e74]/60 rounded-lg px-3 py-2.5 text-sm font-mono text-[#e4eeff] focus:outline-none placeholder-[#2d4166] transition-colors"
                 />
-                {usdcInput && parseFloat(usdcInput) > 0 && (
+                {forOut > 0 && (
                   <p className="text-[10px] font-mono text-[#3a527a]">
-                    Receive: <span className="text-[#C89B00]">{forOut.toLocaleString()} FOR</span>
+                    Receive: <span className="text-[#C89B00]">{forOut.toLocaleString(undefined, { maximumFractionDigits: 2 })} FOR</span>
                   </p>
                 )}
               </div>
-              <button onClick={handleSwap}
+              <button onClick={handleBuyWithUSDC}
                 disabled={isTxPending || !usdcInput || parseFloat(usdcInput) <= 0}
                 className="w-full bg-[#C89B00] hover:bg-[#A07A00] disabled:opacity-30 text-black font-sans font-bold py-2.5 rounded-lg transition-colors text-sm tracking-wide">
-                {isTxPending ? swapStatus : 'SWAP USDC → FOR'}
+                {isTxPending ? swapStatus : 'BUY FOR WITH USDC'}
               </button>
               {swapStatus && !isTxPending && (
                 <p className="text-xs font-mono text-[#4a6585]">{swapStatus}</p>
@@ -262,16 +274,16 @@ export default function AdminDashboard() {
           )}
 
           {!swapPaused && !address && (
-            <p className="text-xs font-sans text-[#3a527a] text-center">Connect wallet to swap.</p>
+            <p className="text-xs font-sans text-[#3a527a] text-center">Connect wallet to buy FOR.</p>
           )}
           {swapPaused && (
-            <p className="text-xs font-mono text-red-500/70 text-center">⊘ Swaps paused by a signer</p>
+            <p className="text-xs font-mono text-[#4a6585] text-center">Contract is currently paused.</p>
           )}
 
-          {isSigner && !swapPaused && (
+          {isSigner1 && !swapPaused && (
             <button onClick={handlePause} disabled={isTxPending}
-              className="w-full border border-red-900/50 text-red-500/70 hover:bg-red-950/30 hover:border-red-800 disabled:opacity-30 text-xs font-sans font-semibold py-2 rounded-lg transition-all tracking-wide uppercase">
-              ⚠ Emergency Pause (1-of-2)
+              className="w-full border border-[#162444] hover:border-[#1e3560] text-[#4a6585] hover:text-[#7a95c0] disabled:opacity-30 text-xs font-sans font-semibold py-2 rounded-lg transition-all tracking-wide uppercase">
+              Pause Contract
             </button>
           )}
         </Card>
@@ -279,7 +291,7 @@ export default function AdminDashboard() {
 
       {deployedSwaps.length === 0 && (
         <Card className="p-12 text-center space-y-3">
-          <p className="text-[#4a6585] font-sans text-sm">No swap contract deployed yet.</p>
+          <p className="text-[#4a6585] font-sans text-sm">No sale contract deployed yet.</p>
           {isSigner1 && (
             <Link href="/admin/propose"
               className="inline-block bg-[#C89B00] hover:bg-[#A07A00] text-black text-xs font-sans font-bold px-5 py-2 rounded-lg transition-colors tracking-wide">
@@ -289,13 +301,13 @@ export default function AdminDashboard() {
         </Card>
       )}
 
-      {/* Recent swaps */}
-      {recentSwaps.length > 0 && (
+      {/* Recent buys */}
+      {recentBuys.length > 0 && (
         <Card className="p-4 space-y-3">
-          <Label>Recent Swaps</Label>
-          {recentSwaps.map((s, i) => (
+          <Label>Recent Purchases</Label>
+          {recentBuys.map((s, i) => (
             <div key={i} className="flex items-center gap-2 text-xs font-mono border-b border-[#0a1528] last:border-0 pb-2 last:pb-0">
-              <span className="text-[#4a6585]">{shortenAddr(s.user)}</span>
+              <span className="text-[#4a6585]">{shortenAddr(s.buyer)}</span>
               <span className="flex-1 border-b border-dashed border-[#0e1b35] mx-1" />
               <span className="text-[#7a95c0]">${formatUnits(s.usdcIn, 6)}</span>
               <span className="text-[#2d4166]">→</span>

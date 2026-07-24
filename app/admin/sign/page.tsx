@@ -132,68 +132,90 @@ export default function SignPage() {
           {proposals.map(p => {
             const key      = String(p.id)
             const deployed = deployedAddresses[key]
+
+            // The latest pending proposal is the active one — anything older that's
+            // still unexecuted is redacted (superseded by a newer version).
+            const latestPendingId = proposals.find(x => !x.executed)?.id
+            const isRedacted = !p.executed && p.id !== latestPendingId
+
             return (
-              <Card key={key} className={p.executed ? 'border-emerald-900/40' : ''}>
+              <Card key={key} className={
+                p.executed    ? 'border-emerald-900/40' :
+                isRedacted    ? 'border-[#0e1b35] opacity-50' :
+                'border-[#152e74]/30'
+              }>
                 <div className="p-5 space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-display font-bold text-[#e4eeff]">{p.label}</p>
+                      <p className={`font-display font-bold ${isRedacted ? 'text-[#3a527a] line-through' : 'text-[#e4eeff]'}`}>
+                        {p.label}
+                      </p>
                       <p className="text-[10px] font-mono text-[#3a527a] mt-0.5">Proposal #{key}</p>
                     </div>
                     <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border tracking-widest uppercase ${
                       p.executed
                         ? 'bg-emerald-950/50 text-emerald-400 border-emerald-900/50 shadow-[0_0_8px_rgba(52,211,153,0.1)]'
-                        : 'bg-[#152e74]/10 text-[#C89B00] border-[#C89B00]/20'
+                        : isRedacted
+                          ? 'bg-[#0e1b35] text-[#3a527a] border-[#0e1b35]'
+                          : 'bg-[#152e74]/10 text-[#C89B00] border-[#C89B00]/20'
                     }`}>
-                      {p.executed ? '⊙ Deployed' : '◌ Pending'}
+                      {p.executed ? '⊙ Deployed' : isRedacted ? '— Redacted' : '◌ Pending'}
                     </span>
                   </div>
 
-                  <div className="space-y-2 bg-[#060c1a] border border-[#0e1b35] rounded-lg p-3">
-                    {[
-                      { label: 'Bytecode hash',  value: shortenHash(p.bytecodeHash) },
-                      { label: 'Signer 1',        value: `${SIGNER_1_ADDRESS.slice(0,10)}…` },
-                      { label: 'Signer 2 (you)',  value: `${SIGNER_2_ADDRESS.slice(0,10)}…` },
-                    ].map(({ label, value }) => (
-                      <div key={label} className="flex justify-between gap-2 text-[10px] font-mono">
-                        <span className="text-[#3a527a]">{label}</span>
-                        <span className="text-[#7a95c0]">{value}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {deployed && (
-                    <div className="bg-emerald-950/20 border border-emerald-900/50 rounded-lg p-3 space-y-1 shadow-[0_0_12px_rgba(52,211,153,0.05)]">
-                      <p className="text-[10px] font-mono text-emerald-400 uppercase tracking-wider">⊙ Deployed</p>
-                      <p className="font-mono text-xs text-emerald-500 break-all">{deployed}</p>
-                      <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/address/${deployed}`}
-                        target="_blank" rel="noreferrer"
-                        className="text-[10px] font-mono text-[#5b8dee] hover:underline">
-                        View on Basescan ↗
-                      </a>
-                    </div>
-                  )}
-
-                  {!p.executed && (
-                    <>
-                      <div className="bg-[#060c1a] border border-[#0e1b35] rounded-lg p-3 space-y-1.5">
-                        <p className="text-[10px] font-sans font-semibold text-[#4a6585] uppercase tracking-wide">Verify before signing</p>
-                        <ul className="text-[10px] font-sans text-[#3a527a] list-disc list-inside space-y-1">
-                          <li>Label matches what Signer 1 told you</li>
-                          <li>Bytecode hash matches the compiled output you both agreed on</li>
-                        </ul>
-                      </div>
-                      <button onClick={() => handleApprove(p)} disabled={pending[key]}
-                        className="w-full bg-[#C89B00] hover:bg-[#A07A00] disabled:opacity-30 text-black font-sans font-bold py-3 rounded-lg transition-colors text-sm tracking-wide">
-                        {pending[key] ? statuses[key] : 'Co-sign & Deploy'}
-                      </button>
-                    </>
-                  )}
-
-                  {statuses[key] && !pending[key] && (
-                    <p className={`text-xs font-mono ${statuses[key].startsWith('Error') ? 'text-red-400' : 'text-emerald-400'}`}>
-                      {statuses[key]}
+                  {isRedacted ? (
+                    <p className="text-[11px] font-sans text-[#3a527a]">
+                      This proposal has been replaced by a newer version below. No action needed here.
                     </p>
+                  ) : (
+                    <>
+                      <div className="space-y-2 bg-[#060c1a] border border-[#0e1b35] rounded-lg p-3">
+                        {[
+                          { label: 'Bytecode hash',  value: shortenHash(p.bytecodeHash) },
+                          { label: 'Signer 1',        value: `${SIGNER_1_ADDRESS.slice(0,10)}…` },
+                          { label: 'Signer 2 (you)',  value: `${SIGNER_2_ADDRESS.slice(0,10)}…` },
+                        ].map(({ label, value }) => (
+                          <div key={label} className="flex justify-between gap-2 text-[10px] font-mono">
+                            <span className="text-[#3a527a]">{label}</span>
+                            <span className="text-[#7a95c0]">{value}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {deployed && (
+                        <div className="bg-emerald-950/20 border border-emerald-900/50 rounded-lg p-3 space-y-1 shadow-[0_0_12px_rgba(52,211,153,0.05)]">
+                          <p className="text-[10px] font-mono text-emerald-400 uppercase tracking-wider">⊙ Deployed</p>
+                          <p className="font-mono text-xs text-emerald-500 break-all">{deployed}</p>
+                          <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/address/${deployed}`}
+                            target="_blank" rel="noreferrer"
+                            className="text-[10px] font-mono text-[#5b8dee] hover:underline">
+                            View on Basescan ↗
+                          </a>
+                        </div>
+                      )}
+
+                      {!p.executed && (
+                        <>
+                          <div className="bg-[#060c1a] border border-[#0e1b35] rounded-lg p-3 space-y-1.5">
+                            <p className="text-[10px] font-sans font-semibold text-[#4a6585] uppercase tracking-wide">Before signing</p>
+                            <ul className="text-[10px] font-sans text-[#3a527a] list-disc list-inside space-y-1">
+                              <li>Confirm the label matches what Signer 1 shared with you</li>
+                              <li>Bytecode hash should match the agreed compiled output</li>
+                            </ul>
+                          </div>
+                          <button onClick={() => handleApprove(p)} disabled={pending[key]}
+                            className="w-full bg-[#C89B00] hover:bg-[#A07A00] disabled:opacity-30 text-black font-sans font-bold py-3 rounded-lg transition-colors text-sm tracking-wide">
+                            {pending[key] ? statuses[key] : 'Co-sign & Deploy'}
+                          </button>
+                        </>
+                      )}
+
+                      {statuses[key] && !pending[key] && (
+                        <p className={`text-xs font-mono ${statuses[key].startsWith('Error') ? 'text-red-400' : 'text-emerald-400'}`}>
+                          {statuses[key]}
+                        </p>
+                      )}
+                    </>
                   )}
                 </div>
               </Card>
